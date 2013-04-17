@@ -1,5 +1,7 @@
 # Ext.Component Properties
 
+Extends the Chrome Developer Tools, adding a sidebar that displays information about the component responsible for the selected DOM element.
+
 ## Install
 
 * Open chrome://extensions/
