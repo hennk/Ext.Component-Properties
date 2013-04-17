@@ -14,7 +14,7 @@ var page_getProperties = function() {
     items.__proto__ = null;
     if (typeof(cmp.getItems) == 'function'){
       cmp.getItems().items.map(function(item, i){
-        items[i] = item.rendered ? item.element.dom : "not rendered yet";
+        items[i] = item.rendered && item.element ? item.element.dom : "not rendered yet";
       });
     }
     copy["items"] = items;
@@ -22,15 +22,15 @@ var page_getProperties = function() {
 
   var page_findParentCmp = function(elem){
     var parent = elem.parentNode;
-    var cmp = Ext.getCmp(parent.id);
-    if (cmp){
-      return cmp;
-    } else if (parent){
-      return page_findParentCmp(parent);
-    } else {
-      return;
+    if (parent){
+      var cmp = Ext.getCmp(parent.id);
+      if (cmp){
+        return cmp;
+      } else if (parent){
+        return page_findParentCmp(parent);
+      }
     }
-  };
+};
 
   var data = {};
   var copy = { __proto__: null};
@@ -43,7 +43,7 @@ var page_getProperties = function() {
     }
 
     var parentCmp = page_findParentCmp($0);
-    if (parentCmp){
+    if (parentCmp && parentCmp.element){
       copy["parent"] = parentCmp.element.dom;
     }
 }
